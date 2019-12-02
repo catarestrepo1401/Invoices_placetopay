@@ -20,3 +20,5 @@ Route::get('/', function () {
 //});
 
 Route::resource('invoices','InvoicesController');
+
+Route::resource('clients','ClientsController');
