@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+//Route::get('/invoices', function () {
+    //return view('invoices.index');
+//});
+
+Route::resource('invoices','InvoicesController');
