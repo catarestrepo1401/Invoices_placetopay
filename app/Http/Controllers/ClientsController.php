@@ -53,7 +53,7 @@ class ClientsController extends Controller
         Clients::insert($datosClient);
 
         //return response()->json($datosClient);
-        return redirect('clients');
+        return redirect('clients')->with('Message','Client added successfully');
     }
 
     /**
@@ -104,8 +104,10 @@ class ClientsController extends Controller
 
         Clients::where('id','=',$id)->update($datosClient);
 
-        $client= Clients::findOrFail($id);
-        return view('clients.edit',compact('client'));
+        //$client= Clients::findOrFail($id);
+        //return view('clients.edit',compact('client'));
+
+        return redirect('clients')->with('Message','Client modified successfully');
     }
 
     /**
@@ -124,7 +126,7 @@ class ClientsController extends Controller
         }
        
 
-        return redirect('clients');
+        return redirect('clients')->with('Message','Client removed');
 
     }
 }
