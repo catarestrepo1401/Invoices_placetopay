@@ -27,6 +27,7 @@ Route::resource('clients','ClientsController');
 //para que no salga el register del administrador (que seria yo)
 //asi para que no salga el registerAuth::routes(['register'=>false]);
 //se hace asi Auth::routes(); para que salga el register
-Auth::routes(['register'=>false]);
+//este pedazo para que no se pueda resetear la contraseña 'reset'=>false
+Auth::routes(['register'=>false, 'reset'=>false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
