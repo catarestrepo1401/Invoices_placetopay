@@ -22,7 +22,8 @@ Route::get('/', function () {
 
 Route::resource('invoices','InvoicesController');
 
-Route::resource('clients','ClientsController');
+//para que me respete el login ->middleware('auth');
+Route::resource('clients','ClientsController')->middleware('auth');
 
 //para que no salga el register del administrador (que seria yo)
 //asi para que no salga el registerAuth::routes(['register'=>false]);

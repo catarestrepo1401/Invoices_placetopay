@@ -16,7 +16,7 @@ class ClientsController extends Controller
     public function index()
     {
         //
-        $datos['clients']=Clients::paginate(5);
+        $datos['clients']=Clients::paginate(1);
 
         return view('clients.index',$datos);
     }
@@ -41,6 +41,18 @@ class ClientsController extends Controller
     public function store(Request $request)
     {
         //
+
+        $campos=[
+            'name' => 'required|string|max:100',
+            'address' => 'required|string|max:100',
+            'cellphone' => 'required|string|max:100',
+            'email' => 'required|email',
+            'photo' => 'required|max:10000|mimes:jpeg,png,jpg'
+        ];
+        $Message=["required"=>'The :attribute is required'];
+        
+        $this->validate($request,$campos,$Message);
+
         //$datosClient=request()->all();
 
         $datosClient=request()->except('_token');
@@ -91,6 +103,25 @@ class ClientsController extends Controller
     public function update(Request $request, $id)
     {
         //
+        
+        $campos=[
+            'name' => 'required|string|max:100',
+            'address' => 'required|string|max:100',
+            'cellphone' => 'required|string|max:100',
+            'email' => 'required|email',
+            
+        ];
+        
+        if($request->hasFile('photo')){
+
+            $campos+= ['photo' => 'required|max:10000|mimes:jpeg,png,jpg'];
+        }
+
+        $Message=["required"=>'The :attribute is required'];
+        
+        $this->validate($request,$campos,$Message);
+
+
         $datosClient=request()->except(['_token','_method']);
 
         if($request->hasFile('photo')){
