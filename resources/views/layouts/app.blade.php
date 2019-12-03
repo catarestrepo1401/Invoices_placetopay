@@ -34,14 +34,18 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         
-//para que me aparezca la ruta de Clients arriba al lado de Laravel
+
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('clients.index') }}">{{ __('Clients') }}</a>
                         </li>
 
-//para que me aparezca la ruta de Invoices arriba al lado de Laravel
+
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('invoices.index') }}">{{ __('Invoices') }}</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('products.index') }}">{{ __('Products') }}</a>
                         </li>
 
                     </ul>
