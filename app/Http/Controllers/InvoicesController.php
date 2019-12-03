@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Invoices;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class InvoicesController extends Controller
 {
@@ -15,7 +16,9 @@ class InvoicesController extends Controller
     public function index()
     {
         //
-        return view('invoices.index');
+        $datos['invoices']=Invoices::paginate(1);
+
+        return view('invoices.index',$datos);
     }
 
     /**
@@ -38,13 +41,16 @@ class InvoicesController extends Controller
     public function store(Request $request)
     {
         //
+
+       
         //$datosInvoice=request()->all();
 
         $datosInvoice=request()->except('_token');
 
-        //Invoices::insert('$datosInvoice');
+        Invoices::insert($datosInvoice);
 
-        return response()->json($datosInvoice);
+        //return response()->json($datosInvoice);
+        return redirect('invoices')->with('Message','Invoice added successfully');
     }
 
     /**
@@ -64,9 +70,12 @@ class InvoicesController extends Controller
      * @param  \App\Invoices  $invoices
      * @return \Illuminate\Http\Response
      */
-    public function edit(Invoices $invoices)
+    public function edit($id)
     {
         //
+        $invoice= Invoices::findOrFail($id);
+
+        return view('invoices.edit',compact('invoice'));
     }
 
     /**
@@ -76,9 +85,21 @@ class InvoicesController extends Controller
      * @param  \App\Invoices  $invoices
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Invoices $invoices)
+    public function update(Request $request, $id)
     {
         //
+        
+
+
+        $datosInvoice=request()->except(['_token','_method']);
+
+        
+        Invoices::where('id','=',$id)->update($datosInvoice);
+
+        //$invoice= Invoices::findOrFail($id);
+        //return view('invoices.edit',compact('invoice'));
+
+        return redirect('invoices')->with('Message','Invoice modified successfully');
     }
 
     /**
@@ -87,8 +108,18 @@ class InvoicesController extends Controller
      * @param  \App\Invoices  $invoices
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Invoices $invoices)
+    public function destroy($id)
     {
         //
+        $invoice= Invoices::findOrFail($id);
+
+        if(Storage::delete('public/'.$invoice->photo)){
+            Invoices::destroy($id);
+        }
+       
+
+        return redirect('invoices')->with('Message','Invoice removed');
+
     }
 }
+

@@ -17,7 +17,7 @@ class CreateInvoicesTable extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->increments('id');
             $table->decimal('iva', 10,2);
-            $table->decimal('subTotal', 10,2);
+            $table->decimal('subtotal', 10,2);
             $table->decimal('total', 10,2);
             $table->timestamps();
         });
